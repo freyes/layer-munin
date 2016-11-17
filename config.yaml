@@ -1,0 +1,6 @@
+options:
+  password:
+    type: string
+    default: "munin"
+    description: |
+      munin user's password

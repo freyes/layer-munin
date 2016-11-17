@@ -1,0 +1,38 @@
+#!/usr/bin/python3
+
+import amulet
+import requests
+import unittest
+
+
+DEFAULT_PASSWORD = 'munin'
+
+
+class TestCharm(unittest.TestCase):
+    def setUp(self):
+        self.d = amulet.Deployment(series='xenial')
+
+        self.d.add('munin')
+        self.d.expose('munin')
+
+        self.d.setup(timeout=900)
+        self.d.sentry.wait()
+
+        self.unit = self.d.sentry['munin'][0]
+
+    def test_service(self):
+        public_address = self.unit.info['public-address']
+
+        page = requests.get('http://{}'.format(public_address))
+        self.assertEqual(page.status_code, 200)
+
+        page = requests.get('http://{}/munin/'.format(public_address))
+        self.assertEqual(page.status_code, 401)
+
+        page = requests.get('http://{}/munin/'.format(public_address),
+                            auth=('munin', DEFAULT_PASSWORD))
+        self.assertEqual(page.status_code, 200)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -13,6 +13,12 @@ class TestCharm(unittest.TestCase):
         self.d = amulet.Deployment(series='xenial')
 
         self.d.add('munin')
+        self.d.add('ubuntu')
+        self.d.add('munin-node', charm='~freyes/munin-node')
+
+        self.d.relate('munin-node:juju-info', 'ubuntu:juju-info')
+        self.d.relate('munin:munin', 'munin-node:munin')
+
         self.d.expose('munin')
 
         self.d.setup(timeout=900)
@@ -32,6 +38,9 @@ class TestCharm(unittest.TestCase):
         page = requests.get('http://{}/munin/'.format(public_address),
                             auth=('munin', DEFAULT_PASSWORD))
         self.assertEqual(page.status_code, 200)
+
+    def test_relation(self):
+        pass
 
 
 if __name__ == '__main__':

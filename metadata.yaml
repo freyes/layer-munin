@@ -22,4 +22,4 @@ tags:
 subordinate: false
 requires:
   munin:
-    interface: munin-node
+    interface: munin

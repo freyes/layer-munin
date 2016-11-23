@@ -21,5 +21,5 @@ tags:
   - applications
 subordinate: false
 requires:
-  munin:
-    interface: munin
+  munin-node:
+    interface: munin-node

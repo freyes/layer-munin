@@ -1,5 +1,5 @@
 includes:
   - 'layer:basic'
   - 'layer:apache2'
-  - 'interface:munin'
+  - 'interface:munin-node'
 repo: 'https://github.com/freyes/layer-munin'

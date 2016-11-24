@@ -17,7 +17,7 @@ class TestCharm(unittest.TestCase):
         self.d.add('munin-node', charm='~freyes/munin-node')
 
         self.d.relate('munin-node:juju-info', 'ubuntu:juju-info')
-        self.d.relate('munin:munin', 'munin-node:munin')
+        self.d.relate('munin:munin-node', 'munin-node:munin-node')
 
         self.d.expose('munin')
 
